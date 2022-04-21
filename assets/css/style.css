@@ -1,18 +1,31 @@
 body {
     font-family: 'Roboto', sans-serif;
+    background-color: #fafafa;
 }
 
+/* Essas são classes utilitárias, que podemos reaproveitar em outras partes do código */
 .hidden {
     display: none;
 }
+
+.m-t-140 {
+    margin-top: 140px;
+}
+
+.d-flex {
+    display: flex;
+}
+
+.bg-primary {
+    background-color: #EC362D;
+}
+/* Essas são classes utilitárias, que podemos reaproveitar em outras partes do código */
 
 header {
     position: fixed;
     width: 100%;
     left: 0;
     top: 0;
-    background-color: #EC362D;
-    display: flex;
     align-items: center;
     justify-content: center;
     box-shadow: 0 4px 4px 0 rgba(0,0,0, .25);
@@ -22,4 +35,51 @@ header {
 header h1 {
     color:#fff;
     font-size: 37px;
+}
+
+form {
+    align-items: center;
+    flex-direction: column;
+    width: 600px;
+    margin: 0 auto;
+}
+
+form .form-title {
+    text-align: center;
+    margin-bottom: 27px;
+}
+
+form .form-title h3 {
+    font-size: 23px;
+    font-weight: bold;
+    color: #000;
+}
+
+form .form-inputs {
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px 1px rgba(0,0,0, .05);
+    width: 100%;
+}
+
+form .form-inputs .input-group input {
+    width: 564px;
+    height: 46px;
+    border-radius: 5px;
+    border: solid 1px #d1d1d1;
+    color: #bababa;
+    padding: 0 20px;
+    font-size: 19px;
+    font-style: italic;
+    margin: 5px auto;
+}
+
+form .form-actions button {
+    width: 370px;
+    height: 54px;
+    border-radius: 15px;
+    color: #fff5f4;
+    font-size: 21px;
+    border: none;
+    margin-top: 85px;
 }
