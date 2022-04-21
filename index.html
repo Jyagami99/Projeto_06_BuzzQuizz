@@ -33,33 +33,158 @@
                 <h3>Comece pelo começo</h3>
             </div>
             
-            <div class="form-inputs">
-
-                <div class="input-group">
-                    <input type="text" placeholder="Título do seu quizz">
+            <div class="form-step step1 hidden">
+                <div class="form-group">
+                    <div class="input-group">
+                        <input type="text" placeholder="Título do seu quizz">
+                    </div>
+                    
+                    <div class="input-group">
+                        <input type="url" placeholder="URL da imagem do seu quizz">
+                    </div>
+    
+                    <div class="input-group">
+                        <input type="number" placeholder="Quantidade de perguntas do quizz">
+                    </div>
+    
+                    <div class="input-group">
+                        <input type="number" placeholder="Quantidade de níveis do quizz">
+                    </div>
                 </div>
-                
-                <div class="input-group">
-                    <input type="url" placeholder="URL da imagem do seu quizz">
+            </div>
+
+            <div class="form-step step2 hidden">
+
+                <div class="form-group expanded">
+
+                    <div class="form-group-header d-flex">
+
+                        <h5>Pergunta X</h5>
+                        <ion-icon name="create-outline"></ion-icon>
+
+                    </div>
+
+                    <div class="input-group form-section">
+                        <label for="">Pergunta 1</label>
+                        <input type="text" placeholder="Título do seu quizz">
+                        <input type="text" placeholder="Título do seu quizz">
+                    </div>
+
+                    <div class="input-group form-section">
+                        <label for="">Pergunta 1</label>
+                        <input type="text" placeholder="Título do seu quizz">
+                        <input type="text" placeholder="Título do seu quizz">
+                    </div>
+
+                    <div class="input-group form-section">
+                        <label for="">Pergunta 1</label>
+                        <input type="text" placeholder="Título do seu quizz">
+                        <input type="text" placeholder="Título do seu quizz">
+                    </div>
+
+                    <div class="input-group form-section">
+                        <input type="text" placeholder="Título do seu quizz">
+                        <input type="text" placeholder="Título do seu quizz">
+                    </div>
+
+                    <div class="input-group form-section">
+                        <input type="text" placeholder="Título do seu quizz">
+                        <input type="text" placeholder="Título do seu quizz">
+                    </div>
+
                 </div>
 
-                <div class="input-group">
-                    <input type="number" placeholder="Quantidade de perguntas do quizz">
+                <div class="form-group collapsed">
+
+                    <div class="form-group-header d-flex">
+                        <h5>Pergunta X</h5>
+                        <ion-icon name="create-outline"></ion-icon>
+                    </div>
+
+                    <div class="input-group form-section">
+                        <label for="">Pergunta 1</label>
+                        <input type="text" placeholder="Título do seu quizz">
+                        <input type="text" placeholder="Título do seu quizz">
+                    </div>
+
                 </div>
 
-                <div class="input-group">
-                    <input type="number" placeholder="Quantidade de níveis do quizz">
+                <div class="form-group collapsed">
+
+                    <div class="form-group-header d-flex">
+                        <h5>Pergunta X</h5>
+                        <ion-icon name="create-outline"></ion-icon>
+                    </div>
+
                 </div>
 
             </div>
 
+            <div class="form-step step3 hidden">
+
+                <div class="form-group expanded">
+
+                    <div class="form-group-header d-flex">
+
+                        <h5>Pergunta X</h5>
+                        <ion-icon name="create-outline"></ion-icon>
+
+                    </div>
+
+                    <div class="input-group">
+                        <label for="">Pergunta 1</label>
+                        <input type="text" placeholder="Título do seu quizz">
+                        <input type="text" placeholder="Título do seu quizz">
+                        <input type="text" placeholder="Título do seu quizz">
+                        <input type="text" placeholder="Título do seu quizz">
+                    </div>
+
+                </div>
+
+                <div class="form-group collapsed">
+
+                    <div class="form-group-header d-flex">
+                        <h5>Pergunta X</h5>
+                        <ion-icon name="create-outline"></ion-icon>
+                    </div>
+
+                    <div class="input-group form-section">
+                        <label for="">Pergunta 1</label>
+                        <input type="text" placeholder="Título do seu quizz">
+                        <input type="text" placeholder="Título do seu quizz">
+                    </div>
+
+                </div>
+
+                <div class="form-group collapsed">
+
+                    <div class="form-group-header d-flex">
+                        <h5>Pergunta X</h5>
+                        <ion-icon name="create-outline"></ion-icon>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="final-screen quizz-div">
+                <img src="./assets/img/potterhead.png" alt="">
+                <div class="quizz-gradient">
+                    <h3>O quão Potterhead é você ?</h3>
+                </div>
+            </div>
+
             <div class="form-actions">
-                <button class="bg-primary" type="submit">Prosseguir para criar perguntas</button>
+                <button class="bg-primary next-btn" type="submit">Prosseguir para criar perguntas</button>
+                <button class="back-home-btn" type="button">Voltar pra home</button>
             </div>
 
         </form>
 
     </div>
     
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
+
 </body>
 </html>

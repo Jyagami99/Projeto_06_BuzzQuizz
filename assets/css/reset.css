@@ -50,3 +50,7 @@ table {
 strong {
     font-weight: bolder;
 }
+
+button:hover, a:hover {
+	cursor: pointer;
+}
