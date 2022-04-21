@@ -116,7 +116,7 @@ form .form-actions {
     flex-direction: column;
 }
 
-form .form-actions .next-btn {
+form .form-actions .forward-btn {
     width: 370px;
     height: 54px;
     border-radius: 15px;

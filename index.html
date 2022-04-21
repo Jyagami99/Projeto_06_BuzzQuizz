@@ -33,22 +33,22 @@
                 <h3>Comece pelo começo</h3>
             </div>
             
-            <div class="form-step step1 hidden">
+            <div class="form-step step1">
                 <div class="form-group">
                     <div class="input-group">
-                        <input type="text" placeholder="Título do seu quizz">
+                        <input type="text" placeholder="Título do seu quizz" name="title">
                     </div>
                     
                     <div class="input-group">
-                        <input type="url" placeholder="URL da imagem do seu quizz">
+                        <input type="url" placeholder="URL da imagem do seu quizz" name="imgURL">
                     </div>
     
                     <div class="input-group">
-                        <input type="number" placeholder="Quantidade de perguntas do quizz">
+                        <input type="number" placeholder="Quantidade de perguntas do quizz" name="questionsQty">
                     </div>
     
                     <div class="input-group">
-                        <input type="number" placeholder="Quantidade de níveis do quizz">
+                        <input type="number" placeholder="Quantidade de níveis do quizz" name="levelsQty">
                     </div>
                 </div>
             </div>
@@ -167,7 +167,7 @@
 
             </div>
 
-            <div class="final-screen quizz-div">
+            <div class="final-screen quizz-div hidden">
                 <img src="./assets/img/potterhead.png" alt="">
                 <div class="quizz-gradient">
                     <h3>O quão Potterhead é você ?</h3>
@@ -175,8 +175,8 @@
             </div>
 
             <div class="form-actions">
-                <button class="bg-primary next-btn" type="submit">Prosseguir para criar perguntas</button>
-                <button class="back-home-btn" type="button">Voltar pra home</button>
+                <button class="bg-primary forward-btn" type="button">Prosseguir para criar perguntas</button>
+                <button class="back-home-btn hidden" type="button">Voltar pra home</button>
             </div>
 
         </form>
