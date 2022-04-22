@@ -31,7 +31,7 @@ function validateQuizzQuestionsQty(questionsQty){
     return (questionsQty >= 3);
 }
 
-function validateQuizzLevels(levelsQty){
+function validateQuizzLevelsQty(levelsQty){
     return (levelsQty >= 2);
 }
 
@@ -152,6 +152,73 @@ function validateQuizzQuestionsInputs(){
 
 }
 
+function getLevelsInputs(){
+
+    let levels = [];
+    
+    [...quizzCreationStep3.querySelectorAll('.level-wrapper')].forEach((wrapper, index)=>{
+        
+        levels.push({
+            levelTitle: wrapper.querySelector('.level-title').value,
+            levelPercentage: parseInt(wrapper.querySelector('.level-percentage').value),
+            levelURL: wrapper.querySelector('.level-url').value,
+            levelDescription: wrapper.querySelector('.level-description').value
+        });
+
+    });
+
+    return levels;
+
+}
+
+function validateQuizzLevelsInputs(){
+    
+    const levels = getLevelsInputs();
+    let isValid = true;
+    let has0PercentageField = false;
+    formCreationData.levels = levels;
+
+    for(let i = 0; i < levels.length; i++){
+
+        const levelTitle = levels[i].levelTitle;
+        const levelPercentage = levels[i].levelPercentage;
+        const levelURL = levels[i].levelURL;
+        const levelDescription = levels[i].levelDescription;
+
+        if(levelTitle.length < 10) {
+            isValid = false;
+            break;
+        }
+
+        if(levelPercentage < 0 || levelPercentage > 100){
+            isValid = false;
+            break;
+        }
+
+        if(levelPercentage === 0){
+            has0PercentageField = true;
+        }
+
+        if(validateURL(levelURL) === false){
+            isValid = false;
+            break;
+        }
+
+        if(levelDescription.length < 30){
+            isValid = false;
+            break;
+        }
+
+    }
+
+    if(has0PercentageField === false) {
+        isValid = false;
+    }
+
+    return isValid;
+
+}
+
 function validateStep(){
 
     const formData = getFormData();
@@ -163,7 +230,7 @@ function validateStep(){
         formCreationData.questionsQty = parseInt(formData.get('questionsQty'));
         formCreationData.levelsQty = parseInt(formData.get('levelsQty'));
         
-        if(validateQuizzTitle(formCreationData.title) && validateQuizzQuestionsQty(formCreationData.questionsQty) && validateQuizzLevels(formCreationData.levelsQty) && validateURL(formCreationData.imgURL)){
+        if(validateQuizzTitle(formCreationData.title) && validateQuizzQuestionsQty(formCreationData.questionsQty) && validateQuizzLevelsQty(formCreationData.levelsQty) && validateURL(formCreationData.imgURL)){
             return true;
         } else {
             return false;
@@ -175,7 +242,7 @@ function validateStep(){
 
     } else if(creationActualStep === 2){
 
-
+        return validateQuizzLevelsInputs();
 
     }
 
@@ -305,12 +372,14 @@ function appendLevelsToForm(){
                     <ion-icon name="create-outline"></ion-icon>
                 </div>
 
-                <div class="input-group">
-                    <label for="">Nível ${i + 1}</label>
-                    <input type="text" placeholder="Título do nível">
-                    <input type="text" placeholder="% de acerto mínima">
-                    <input type="text" placeholder="URL da imagem do nível">
-                    <input type="text" placeholder="Descrição do nível">
+                <div class="level-wrapper">
+                    <div class="input-group">
+                        <label for="">Nível ${i + 1}</label>
+                        <input type="text" placeholder="Título do nível" class="level-title">
+                        <input type="number" placeholder="% de acerto mínima" class="level-percentage">
+                        <input type="url" placeholder="URL da imagem do nível" class="level-url">
+                        <input type="text" placeholder="Descrição do nível" class="level-description">
+                    </div>
                 </div>
 
             </div>
