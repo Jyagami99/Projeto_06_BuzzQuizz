@@ -105,8 +105,7 @@ function validateIncorrectAnswers(incorrectAnswers){
         return false;
 
     });
-    console.log('filledAnswers', filledAnswers);
-    return (filledAnswers.length > 0);
+    return filledAnswers;
 
 }
 
@@ -114,6 +113,7 @@ function validateQuizzQuestionsInputs(){
 
     const questions = getQuestionsInputs();
     let isValid = true;
+    formCreationData.questions = questions;
 
     for(let i = 0; i < questions.length; i++){
 
@@ -127,28 +127,24 @@ function validateQuizzQuestionsInputs(){
             break;
         }
 
-        console.log('validação 1');
-
         if(validateHexColor(questionColor) === false){
             isValid = false;
             break;
         }
-
-        console.log('validação 2');
 
         if(questionCorrectAnswer.text === '' || validateURL(questionCorrectAnswer.url) === false){
             isValid = false;
             break;
         }
 
-        console.log('validação 3');
+        const questionFilledAnswers = validateIncorrectAnswers(questionIncorrectAnswers);
 
-        if(validateIncorrectAnswers(questionIncorrectAnswers) === false){
+        if(questionFilledAnswers.length === 0){
             isValid = false;
             break;
         }
 
-        console.log('validação 4');
+        formCreationData.questions[i].incorrectAnswers = questionFilledAnswers;
 
     }
 
@@ -207,6 +203,8 @@ function nextStep(){
                 case 2:
                     quizzCreationTitle.innerText = 'Agora, decida os níveis';
                     forwardBtn.innerText = 'Finalizar Quizz';
+                    console.log('formCreationData', formCreationData);
+                    appendLevelsToForm();
                     break;
 
             }
@@ -287,14 +285,47 @@ function appendQuestionsToForm(){
 
     }
 
-    controlClickOnQuestions();
+    controlClickOnFormGroups(quizzCreationStep2);
     quizzCreationStep2.querySelector('.form-group:first-child').click();
 
 }
 
-function controlClickOnQuestions(){
+function appendLevelsToForm(){
 
-    [...quizzCreationStep2.querySelectorAll('.form-group .form-group-header')].forEach(element=>{
+    quizzCreationStep2.classList.add('hidden');
+    quizzCreationStep3.classList.remove('hidden');
+
+    for(let i = 0; i < formCreationData.levelsQty; i++){
+
+        quizzCreationStep3.innerHTML += `
+            <div class="form-group expanded">
+
+                <div class="form-group-header d-flex">
+                    <h5>Nível ${i + 1}</h5>
+                    <ion-icon name="create-outline"></ion-icon>
+                </div>
+
+                <div class="input-group">
+                    <label for="">Nível ${i + 1}</label>
+                    <input type="text" placeholder="Título do nível">
+                    <input type="text" placeholder="% de acerto mínima">
+                    <input type="text" placeholder="URL da imagem do nível">
+                    <input type="text" placeholder="Descrição do nível">
+                </div>
+
+            </div>
+        `;
+
+    }
+
+    controlClickOnFormGroups(quizzCreationStep3);
+    quizzCreationStep3.querySelector('.form-group:first-child').click();
+
+}
+
+function controlClickOnFormGroups(stepWrapper){
+
+    [...stepWrapper.querySelectorAll('.form-group .form-group-header')].forEach(element=>{
 
         element.addEventListener('click', ()=>{
             
