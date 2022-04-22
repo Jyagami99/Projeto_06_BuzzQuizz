@@ -137,6 +137,10 @@ form .input-group.form-section {
     margin-bottom: 28px;
 }
 
+form .form-group.collapsed {
+    cursor: pointer;
+}
+
 form .form-group.collapsed .input-group {
     display: none;
 }
