@@ -38,19 +38,28 @@ function validateQuizzLevels(levelsQty){
 function validateURL(url){
 
     url = url.trim();
-    let expression = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi;
-    let regex = new RegExp(expression);
+    const expression = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi;
+    const regex = new RegExp(expression);
     return regex.test(url);
 
 }
 
 function getIncorrectAnswers(wrapper){
+
+    const textsArray = [...wrapper.querySelectorAll('.incorrect-answer-text')].map(input => input.value);
+    const urlsArray = [...wrapper.querySelectorAll('.incorrect-answer-url')].map(input => input.value);
     
-    let incorrectAnswers = {
-        texts: [...wrapper.querySelectorAll('.incorrect-answer-text')].map(input => input.value),
-        urls: [...wrapper.querySelectorAll('.incorrect-answer-url')].map(input => input.value)
-    };
+    let incorrectAnswers = [];
     
+    for(let i = 0; i < textsArray.length; i++){
+
+        incorrectAnswers.push({
+            text: textsArray[i],
+            url: urlsArray[i]
+        });
+
+    }
+
     return incorrectAnswers;
 
 }
@@ -66,7 +75,7 @@ function getQuestionsInputs(){
             questionColor: wrapper.querySelector('.question-color-input').value,
             correctAnswer: {
                 text: wrapper.querySelector('.answer-input').value,
-                imgURL: wrapper.querySelector('.answer-url-input').value
+                url: wrapper.querySelector('.answer-url-input').value
             },
             incorrectAnswers: getIncorrectAnswers(wrapper)
         });
@@ -77,10 +86,73 @@ function getQuestionsInputs(){
 
 }
 
+function validateHexColor(hexColor){
+
+    hexColor = hexColor.trim();
+    const expression = /^#(?:[0-9a-fA-F]{3,4}){1,2}$/;
+    const regex = new RegExp(expression);
+    return regex.test(hexColor);
+
+}
+
+function validateIncorrectAnswers(incorrectAnswers){
+
+    const filledAnswers = incorrectAnswers.filter(answer=>{
+
+        if(answer.text !== '' && validateURL(answer.url)) {
+            return true;
+        }
+        return false;
+
+    });
+    console.log('filledAnswers', filledAnswers);
+    return (filledAnswers.length > 0);
+
+}
+
 function validateQuizzQuestionsInputs(){
 
     const questions = getQuestionsInputs();
-    console.log('questions', questions);
+    let isValid = true;
+
+    for(let i = 0; i < questions.length; i++){
+
+        const questionText = questions[i].questionText;
+        const questionColor = questions[i].questionColor;
+        const questionCorrectAnswer = questions[i].correctAnswer;
+        const questionIncorrectAnswers = questions[i].incorrectAnswers;
+
+        if(questionText.length < 20) {
+            isValid = false;
+            break;
+        }
+
+        console.log('validação 1');
+
+        if(validateHexColor(questionColor) === false){
+            isValid = false;
+            break;
+        }
+
+        console.log('validação 2');
+
+        if(questionCorrectAnswer.text === '' || validateURL(questionCorrectAnswer.url) === false){
+            isValid = false;
+            break;
+        }
+
+        console.log('validação 3');
+
+        if(validateIncorrectAnswers(questionIncorrectAnswers) === false){
+            isValid = false;
+            break;
+        }
+
+        console.log('validação 4');
+
+    }
+
+    return isValid;
 
 }
 
