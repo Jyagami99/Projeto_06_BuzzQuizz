@@ -25,6 +25,10 @@ body {
     cursor: pointer;
 }
 
+.quizz-div img {
+    max-width: 500px;
+}
+
 .quizz-div div {
     position: absolute;
     left: 0;

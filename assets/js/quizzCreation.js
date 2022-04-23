@@ -4,11 +4,13 @@ let creationActualStep = 0;
 let creationStepsElements = [];
 const formCreationData = {};
 const forwardBtn = document.querySelector('.forward-btn');
+const backHomeBtn = document.querySelector('.back-home-btn');
 const quizzCreationTitle = quizzCreationScreen.querySelector('.form-title h3');
 const quizzCreationForm = quizzCreationScreen.querySelector('form');
 const quizzCreationStep1 = quizzCreationScreen.querySelector('.step1');
 const quizzCreationStep2 = quizzCreationScreen.querySelector('.step2');
 const quizzCreationStep3 = quizzCreationScreen.querySelector('.step3');
+const finalScreen = quizzCreationScreen.querySelector('.final-screen');
 
 // Função responsável por carregar em um array todos os elementos do HTML que compõem o formulário de criação de um quiz.
 function loadSteps(){
@@ -55,7 +57,7 @@ function getIncorrectAnswers(wrapper){
 
         incorrectAnswers.push({
             text: textsArray[i],
-            url: urlsArray[i]
+            image: urlsArray[i]
         });
 
     }
@@ -75,7 +77,7 @@ function getQuestionsInputs(){
             questionColor: wrapper.querySelector('.question-color-input').value,
             correctAnswer: {
                 text: wrapper.querySelector('.answer-input').value,
-                url: wrapper.querySelector('.answer-url-input').value
+                image: wrapper.querySelector('.answer-url-input').value
             },
             incorrectAnswers: getIncorrectAnswers(wrapper)
         });
@@ -88,6 +90,10 @@ function getQuestionsInputs(){
 
 function validateHexColor(hexColor){
 
+    if(hexColor.length !== 7) {
+        return false;
+    }
+
     hexColor = hexColor.trim();
     const expression = /^#(?:[0-9a-fA-F]{3,4}){1,2}$/;
     const regex = new RegExp(expression);
@@ -99,7 +105,7 @@ function validateIncorrectAnswers(incorrectAnswers){
 
     const filledAnswers = incorrectAnswers.filter(answer=>{
 
-        if(answer.text !== '' && validateURL(answer.url)) {
+        if(answer.text !== '' && validateURL(answer.image)) {
             return true;
         }
         return false;
@@ -132,7 +138,7 @@ function validateQuizzQuestionsInputs(){
             break;
         }
 
-        if(questionCorrectAnswer.text === '' || validateURL(questionCorrectAnswer.url) === false){
+        if(questionCorrectAnswer.text === '' || validateURL(questionCorrectAnswer.image) === false){
             isValid = false;
             break;
         }
@@ -159,10 +165,10 @@ function getLevelsInputs(){
     [...quizzCreationStep3.querySelectorAll('.level-wrapper')].forEach((wrapper, index)=>{
         
         levels.push({
-            levelTitle: wrapper.querySelector('.level-title').value,
-            levelPercentage: parseInt(wrapper.querySelector('.level-percentage').value),
-            levelURL: wrapper.querySelector('.level-url').value,
-            levelDescription: wrapper.querySelector('.level-description').value
+            title: wrapper.querySelector('.level-title').value,
+            minValue: parseInt(wrapper.querySelector('.level-percentage').value),
+            image: wrapper.querySelector('.level-url').value,
+            text: wrapper.querySelector('.level-description').value
         });
 
     });
@@ -180,31 +186,31 @@ function validateQuizzLevelsInputs(){
 
     for(let i = 0; i < levels.length; i++){
 
-        const levelTitle = levels[i].levelTitle;
-        const levelPercentage = levels[i].levelPercentage;
-        const levelURL = levels[i].levelURL;
-        const levelDescription = levels[i].levelDescription;
+        const title = levels[i].title;
+        const minValue = levels[i].minValue;
+        const image = levels[i].image;
+        const text = levels[i].text;
 
-        if(levelTitle.length < 10) {
+        if(title.length < 10) {
             isValid = false;
             break;
         }
 
-        if(levelPercentage < 0 || levelPercentage > 100){
+        if(minValue < 0 || minValue > 100){
             isValid = false;
             break;
         }
 
-        if(levelPercentage === 0){
+        if(minValue === 0){
             has0PercentageField = true;
         }
 
-        if(validateURL(levelURL) === false){
+        if(validateURL(image) === false){
             isValid = false;
             break;
         }
 
-        if(levelDescription.length < 30){
+        if(text.length < 30){
             isValid = false;
             break;
         }
@@ -244,6 +250,11 @@ function validateStep(){
 
         return validateQuizzLevelsInputs();
 
+    } else if(creationActualStep === 3){
+
+        // aqui devemos carregar a página do quiz
+        // necessário ter uma função para exibir um quiz
+
     }
 
 }
@@ -270,7 +281,6 @@ function nextStep(){
                 case 2:
                     quizzCreationTitle.innerText = 'Agora, decida os níveis';
                     forwardBtn.innerText = 'Finalizar Quizz';
-                    console.log('formCreationData', formCreationData);
                     appendLevelsToForm();
                     break;
 
@@ -295,8 +305,8 @@ function displayActualScreen(){
 function controlButtons(){
 
     forwardBtn.addEventListener('click', () => nextStep());
-    const backHomeBtn = document.querySelector('.back-home-btn');
     backHomeBtn.addEventListener('click', () => changeScreen('lists'));
+    // ao voltar para a home, devemos recarregar a lista de quizzes, então devemos ter uma função para isso também
 
 }
 
@@ -414,11 +424,74 @@ function controlClickOnFormGroups(stepWrapper){
 
 }
 
+function parseQuestion(question){
+
+    const questionAnswers = question.incorrectAnswers.map(incorrectAnswer=>{
+        incorrectAnswer.isCorrectAnswer = false;
+        return incorrectAnswer;
+    });
+    question.correctAnswer.isCorrectAnswer = true;
+    questionAnswers.push(question.correctAnswer);
+
+    const obj = {
+        title: question.questionText,
+        color: question.questionColor,
+        answers: questionAnswers
+    };
+
+    return obj;
+
+}
+
+function parseQuizzData(){
+
+    const obj = {
+        title: formCreationData.title,
+        image: formCreationData.imgURL,
+        questions: formCreationData.questions.map(question => parseQuestion(question)),
+        levels: formCreationData.levels
+    };
+
+    return obj;
+
+}
+
 function finishQuizzCreation(){
 
-    console.log('finalizando criação do quizz...');
-    quizzCreationTitle.innerText = 'Seu quizz está pronto!';
-    forwardBtn.innerText = 'Acessar Quizz';
+    const quizzData = parseQuizzData();
+
+    axios.post('https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes', quizzData).then(response=>{
+
+        finalScreen.classList.remove('hidden');
+        const quizzImgEl = finalScreen.querySelector('img');
+        const quizzTitleEl = finalScreen.querySelector('.quizz-gradient h3');
+
+        quizzImgEl.src = quizzData.image;
+        quizzTitleEl.innerText = quizzData.title;
+        quizzCreationTitle.innerText = 'Seu quizz está pronto!';
+        forwardBtn.innerText = 'Acessar Quizz';
+        backHomeBtn.classList.remove('hidden');
+        saveUserQuizz(response.data);
+
+    }).catch(err=>{
+        console.log('err', err, err.response);
+        alert('Ocorreu um erro desconhecido ao salvar o quizz. Tente novamente.');
+    });
+
+}
+
+function saveUserQuizz(quizzData){
+
+    let userQuizzes = localStorage.getItem('quizzes');
+    
+    if(userQuizzes !== null){
+        userQuizzes = JSON.parse(userQuizzes);
+    } else {
+        userQuizzes = [];
+    }
+
+    userQuizzes.push(quizzData);
+    localStorage.setItem('quizzes', JSON.stringify(userQuizzes));
 
 }
 
