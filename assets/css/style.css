@@ -3,50 +3,6 @@ body {
     background-color: #fafafa;
 }
 
-/* Essas são classes utilitárias, que podemos reaproveitar em outras partes do código */
-.hidden > div{
-    display: none;
-}
-
-.hidden > form{
-    display: none;
-}
-
-.m-t-140 {
-    margin-top: 140px;
-}
-
-.d-flex {
-    display: flex;
-}
-
-.bg-primary {
-    background-color: #EC362D;
-}
-
-.quizz-div {
-    position: relative;
-    cursor: pointer;
-}
-
-.quizz-div div {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-image: linear-gradient(to bottom, transparent 30%, #000c 100%);
-}
-
-.quizz-div h3 {
-    color: #fff;
-    font-size: 23px;
-    left: 0;
-    bottom: 0;
-    position: absolute;
-    padding: 25px;
-}
-
 .quizz-lists-screen{
     display: flex;
     align-items: center;
@@ -162,7 +118,6 @@ body {
     font-size: 20px;
     font-weight: 700;
 }
-/* Essas são classes utilitárias, que podemos reaproveitar em outras partes do código */
 
 header {
     position: fixed;
@@ -287,3 +242,44 @@ form .form-group .form-group-header ion-icon {
     font-size: 26px;
     font-weight: bold;
 }
+
+/* Essas são classes utilitárias, que podemos reaproveitar em outras partes do código */
+.d-flex {
+    display: flex;
+}
+
+.hidden{
+    display: none;
+}
+
+.m-t-140 {
+    margin-top: 140px;
+}
+
+.bg-primary {
+    background-color: #EC362D;
+}
+
+.quizz-div {
+    position: relative;
+    cursor: pointer;
+}
+
+.quizz-div div {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(to bottom, transparent 30%, #000c 100%);
+}
+
+.quizz-div h3 {
+    color: #fff;
+    font-size: 23px;
+    left: 0;
+    bottom: 0;
+    position: absolute;
+    padding: 25px;
+}
+/* Essas são classes utilitárias, que podemos reaproveitar em outras partes do código */
