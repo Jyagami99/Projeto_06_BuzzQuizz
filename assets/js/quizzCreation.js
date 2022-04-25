@@ -417,12 +417,12 @@ function appendQuestionsToForm(){
                         
                         <div class="input-group">
                             <label for="">Pergunta ${i + 1}</label>
-                            <input type="text" placeholder="Texto da pergunta" class="question-text-input">
+                            <input type="text" value="fhj sjkdhfjkhsdjk fhjksdhfkjshdfkjs" placeholder="Texto da pergunta" class="question-text-input">
                             <span></span>
                         </div>
 
                         <div class="input-group">
-                            <input type="text" placeholder="Cor de fundo da pergunta" class="question-color-input">
+                            <input type="text" value="#000000" placeholder="Cor de fundo da pergunta" class="question-color-input">
                             <span></span>
                         </div>
 
@@ -432,12 +432,12 @@ function appendQuestionsToForm(){
 
                         <div class="input-group">
                             <label for="">Resposta correta</label>
-                            <input type="text" placeholder="Resposta correta" class="answer-input">
+                            <input type="text" value="fhj sjkdhfjkhsdjk fhjksdhfkjshdfkjs" placeholder="Resposta correta" class="answer-input">
                             <span></span>
                         </div>
 
                         <div class="input-group">
-                            <input type="url" placeholder="URL da imagem" class="answer-url-input">
+                            <input type="url" value="https://www.grupoescolar.com/wp-content/uploads/2021/03/paisagem-2C.jpg" placeholder="URL da imagem" class="answer-url-input">
                             <span></span>
                         </div>
                         
@@ -449,12 +449,12 @@ function appendQuestionsToForm(){
 
                         <div class="input-group">
                             <label for="">Respostas incorretas</label>
-                            <input type="text" placeholder="Resposta incorreta 1" class="incorrect-answer-text">
+                            <input type="text" value="fhj sjkdhfjkhsdjk fhjksdhfkjshdfkjs" placeholder="Resposta incorreta 1" class="incorrect-answer-text">
                             <span></span>
                         </div>
 
                         <div class="input-group">
-                            <input type="url" placeholder="URL da imagem 1" class="incorrect-answer-url">
+                            <input type="url" value="https://www.grupoescolar.com/wp-content/uploads/2021/03/paisagem-2C.jpg" placeholder="URL da imagem 1" class="incorrect-answer-url">
                             <span></span>
                         </div>
 
@@ -518,19 +518,19 @@ function appendLevelsToForm(){
                 <div class="level-wrapper">
                     <div class="input-group">
                         <label for="">Nível ${i + 1}</label>
-                        <input type="text" placeholder="Título do nível" class="level-title">
+                        <input type="text" value="fhj sjkdhfjkhsdjk fhjksdhfkjshdfkjs" placeholder="Título do nível" class="level-title">
                         <span></span>
                     </div>
                     <div class="input-group">
-                        <input type="number" placeholder="% de acerto mínima" class="level-percentage">
+                        <input type="number" value="0" placeholder="% de acerto mínima" class="level-percentage">
                         <span></span>
                     </div>
                     <div class="input-group">
-                        <input type="url" placeholder="URL da imagem do nível" class="level-url">
+                        <input type="url" value="https://www.grupoescolar.com/wp-content/uploads/2021/03/paisagem-2C.jpg" placeholder="URL da imagem do nível" class="level-url">
                         <span></span>
                     </div>
                     <div class="input-group">
-                        <input type="text" placeholder="Descrição do nível" class="level-description">
+                        <input type="text" value="fhj sjkdhfjkhsdjk fhlakjsl kjdlakjsdlkjksdhfkjshdfkjs" placeholder="Descrição do nível" class="level-description">
                         <span></span>
                     </div>
                 </div>
