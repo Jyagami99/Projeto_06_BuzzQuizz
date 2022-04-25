@@ -1,7 +1,7 @@
 /*jshint esversion:9 */
 
-let creationActualStep = 0;
 let creationStepsElements = [];
+let savedQuizzData = {};
 const validationErrorObj = {
     message: '',
     inputGroup: null
@@ -388,7 +388,10 @@ function displayActualScreen(){
 function controlButtons(){
 
     forwardBtn.addEventListener('click', () => nextStep());
-    backHomeBtn.addEventListener('click', () => changeScreen('lists'));
+    backHomeBtn.addEventListener('click', () => {
+        recebeQuizz();
+        changeScreen('lists');
+    });
     // ao voltar para a home, devemos recarregar a lista de quizzes, então devemos ter uma função para isso também
 
 }
@@ -622,6 +625,7 @@ function finishQuizzCreation(){
 
 function saveUserQuizz(quizzData){
 
+    savedQuizzData = quizzData;
     let userQuizzes = localStorage.getItem('quizzes');
     
     if(userQuizzes !== null){
