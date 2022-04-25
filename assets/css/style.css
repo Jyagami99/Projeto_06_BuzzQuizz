@@ -49,6 +49,7 @@ body {
     flex-direction: column;
     width: 80%;
     height: 200px;
+    border: 1px dashed #000;
 }
 
 .meu-quizz span{
