@@ -170,13 +170,28 @@ form .form-group .input-group input {
     padding: 0 20px;
     font-size: 19px;
     font-style: italic;
-    margin-bottom: 14px;
+    margin-top: 14px;
 }
 
 form .form-group .input-group label {
     font-size: 20px;
     margin-bottom: 20px;
     font-weight: bold;
+}
+
+form .form-group .input-group span {
+    font-size: 16px;
+    margin-top: 6px;
+    display: none;
+}
+
+form .form-group .input-group.has-error span {
+    color: #EC362D;
+    display: initial;
+}
+
+form .form-group .input-group.has-error input {
+    background-color: #ffe9e9;
 }
 
 form .form-group .input-group {
@@ -208,7 +223,7 @@ form .form-actions .back-home-btn {
     margin-top: 20px;
 }
 
-form .input-group.form-section {
+form .form-section {
     margin-bottom: 28px;
 }
 
@@ -265,7 +280,11 @@ form .form-group .form-group-header ion-icon {
     cursor: pointer;
 }
 
-.quizz-div div {
+.quizz-div img {
+    max-width: 500px;
+}
+
+.quizz-div .quizz-gradient {
     position: absolute;
     left: 0;
     top: 0;

@@ -2,6 +2,10 @@
 
 let creationActualStep = 0;
 let creationStepsElements = [];
+const validationErrorObj = {
+    message: '',
+    inputGroup: null
+};
 const formCreationData = {};
 const forwardBtn = document.querySelector('.forward-btn');
 const backHomeBtn = document.querySelector('.back-home-btn');
@@ -101,17 +105,34 @@ function validateHexColor(hexColor){
 
 }
 
-function validateIncorrectAnswers(incorrectAnswers){
+function validateIncorrectAnswers(incorrectAnswers, questionIndex){
 
-    const filledAnswers = incorrectAnswers.filter(answer=>{
+    const filledAnswers = incorrectAnswers.filter((answer, answerIndex)=>{
 
-        if(answer.text !== '' && validateURL(answer.image)) {
-            return true;
+        if(answer.text === '') {
+            newValidationError('O texto da pergunta precisa ser maior que 20 caracteres.', getQuestionInputGroup(questionIndex, 'incorrect-answer-text'), answerIndex);
+            return false;
         }
-        return false;
+
+        if(validateURL(answer.image) === false){
+            newValidationError('O texto da pergunta precisa ser maior que 20 caracteres.', getQuestionInputGroup(questionIndex, 'incorrect-answer-url'), answerIndex);
+            return false;
+        }
+
+        return true;
 
     });
     return filledAnswers;
+
+}
+
+function getQuestionInputGroup(questionIndex, inputClass, inputIndex = 0){
+
+    const questionWrapper = [...quizzCreationStep2.querySelectorAll('.question-wrapper')][questionIndex];
+    const input = [...questionWrapper.querySelectorAll(`.${inputClass}`)][inputIndex];
+    const inputGroup = input.parentNode;
+
+    return inputGroup;
 
 }
 
@@ -129,23 +150,33 @@ function validateQuizzQuestionsInputs(){
         const questionIncorrectAnswers = questions[i].incorrectAnswers;
 
         if(questionText.length < 20) {
+            newValidationError('O texto da pergunta precisa ser maior que 20 caracteres.', getQuestionInputGroup(i, 'question-text-input'));
             isValid = false;
             break;
         }
 
         if(validateHexColor(questionColor) === false){
+            newValidationError('O formato da cor deve estar em hexadecimal.', getQuestionInputGroup(i, 'question-color-input'));
             isValid = false;
             break;
         }
 
-        if(questionCorrectAnswer.text === '' || validateURL(questionCorrectAnswer.image) === false){
+        if(questionCorrectAnswer.text === ''){
+            newValidationError('É necessário informar a resposta correta da pergunta.', getQuestionInputGroup(i, 'answer-input'));
             isValid = false;
             break;
         }
 
-        const questionFilledAnswers = validateIncorrectAnswers(questionIncorrectAnswers);
+        if(validateURL(questionCorrectAnswer.image) === false){
+            newValidationError('Informe uma URL válida para a imagem da resposta.', getQuestionInputGroup(i, 'answer-url-input'));
+            isValid = false;
+            break;
+        }
+
+        const questionFilledAnswers = validateIncorrectAnswers(questionIncorrectAnswers, i);
 
         if(questionFilledAnswers.length === 0){
+            newValidationError('Você precisa informar pelo menos uma resposta errada.', getQuestionInputGroup(i, 'incorrect-answer-text'));
             isValid = false;
             break;
         }
@@ -177,6 +208,16 @@ function getLevelsInputs(){
 
 }
 
+function getLevelInputGroup(levelIndex, inputClass, inputIndex = 0){
+
+    const levelWrapper = [...quizzCreationStep3.querySelectorAll('.level-wrapper')][levelIndex];
+    const input = [...levelWrapper.querySelectorAll(`.${inputClass}`)][inputIndex];
+    const inputGroup = input.parentNode;
+
+    return inputGroup;
+
+}
+
 function validateQuizzLevelsInputs(){
     
     const levels = getLevelsInputs();
@@ -192,11 +233,13 @@ function validateQuizzLevelsInputs(){
         const text = levels[i].text;
 
         if(title.length < 10) {
+            newValidationError('O título do nível precisa ser maior que 10 caracteres.', getLevelInputGroup(i, 'level-title'));
             isValid = false;
             break;
         }
 
         if(minValue < 0 || minValue > 100){
+            newValidationError('A porcentagem do nível precisa ser um número entre 0 e 100.', getLevelInputGroup(i, 'level-percentage'));
             isValid = false;
             break;
         }
@@ -206,11 +249,13 @@ function validateQuizzLevelsInputs(){
         }
 
         if(validateURL(image) === false){
+            newValidationError('Informe uma URL válida para a imagem do nível.', getLevelInputGroup(i, 'level-url'));
             isValid = false;
             break;
         }
 
         if(text.length < 30){
+            newValidationError('A descrição do nível precisa ser maior que 30 caracteres.', getLevelInputGroup(i, 'level-description'));
             isValid = false;
             break;
         }
@@ -218,11 +263,17 @@ function validateQuizzLevelsInputs(){
     }
 
     if(has0PercentageField === false) {
+        newValidationError('É necessário ter pelo menos um nível com 0%.', getLevelInputGroup(0, 'level-percentage'));
         isValid = false;
     }
 
     return isValid;
 
+}
+
+function newValidationError(message, inputGroup){
+    validationErrorObj.message = message;
+    validationErrorObj.inputGroup = inputGroup;
 }
 
 function validateStep(){
@@ -235,12 +286,28 @@ function validateStep(){
         formCreationData.imgURL = formData.get('imgURL');
         formCreationData.questionsQty = parseInt(formData.get('questionsQty'));
         formCreationData.levelsQty = parseInt(formData.get('levelsQty'));
-        
-        if(validateQuizzTitle(formCreationData.title) && validateQuizzQuestionsQty(formCreationData.questionsQty) && validateQuizzLevelsQty(formCreationData.levelsQty) && validateURL(formCreationData.imgURL)){
-            return true;
-        } else {
+
+        if(validateQuizzTitle(formCreationData.title) === false){
+            newValidationError('O título precisa ter entre 20 e 65 caracteres.', quizzCreationForm.querySelector(`[name="title"]`).parentNode);
             return false;
         }
+
+        if(validateURL(formCreationData.imgURL) === false){
+            newValidationError('Informe uma URL válida para a imagem do quiz.', quizzCreationForm.querySelector(`[name="imgURL"]`).parentNode);
+            return false;
+        }
+
+        if(validateQuizzQuestionsQty(formCreationData.questionsQty) === false){
+            newValidationError('É necessário que o quiz possua pelo menos 3 perguntas.', quizzCreationForm.querySelector(`[name="questionsQty"]`).parentNode);
+            return false;
+        }
+
+        if(validateQuizzLevelsQty(formCreationData.levelsQty) === false){
+            newValidationError('É necessário que o quiz tenha pelo menos 2 níveis.', quizzCreationForm.querySelector(`[name="levelsQty"]`).parentNode);
+            return false;
+        }
+        
+        return true;
 
     } else if(creationActualStep === 1){
 
@@ -292,9 +359,25 @@ function nextStep(){
 
     } else {
 
-        alert('Preencha os campos corretamente...');
-
+        validationError();
+        
     }
+
+}
+
+function removeErrorMessages(){
+
+    [...document.querySelectorAll('.input-group.has-error')].forEach(inputGroup => inputGroup.classList.remove('has-error'));
+
+}
+
+function validationError(){
+
+    removeErrorMessages();
+    validationErrorObj.inputGroup.classList.add('has-error');
+    const span = validationErrorObj.inputGroup.querySelector('span');
+    span.innerText = validationErrorObj.message;
+    validationErrorObj.inputGroup.parentNode.scrollIntoView();
 
 }
 
@@ -326,33 +409,80 @@ function appendQuestionsToForm(){
                 </div>
 
                 <div class="question-wrapper">
-                
-                    <div class="input-group form-section">
-                        <label for="">Pergunta ${i + 1}</label>
-                        <input type="text" placeholder="Texto da pergunta" class="question-text-input">
-                        <input type="text" placeholder="Cor de fundo da pergunta" class="question-color-input">
+
+                    <div class="form-section">
+                        
+                        <div class="input-group">
+                            <label for="">Pergunta ${i + 1}</label>
+                            <input type="text" placeholder="Texto da pergunta" class="question-text-input">
+                            <span></span>
+                        </div>
+
+                        <div class="input-group">
+                            <input type="text" placeholder="Cor de fundo da pergunta" class="question-color-input">
+                            <span></span>
+                        </div>
+
                     </div>
 
-                    <div class="input-group form-section">
-                        <label for="">Resposta correta</label>
-                        <input type="text" placeholder="Resposta correta" class="answer-input">
-                        <input type="url" placeholder="URL da imagem" class="answer-url-input">
+                    <div class="form-section">
+
+                        <div class="input-group">
+                            <label for="">Resposta correta</label>
+                            <input type="text" placeholder="Resposta correta" class="answer-input">
+                            <span></span>
+                        </div>
+
+                        <div class="input-group">
+                            <input type="url" placeholder="URL da imagem" class="answer-url-input">
+                            <span></span>
+                        </div>
+                        
                     </div>
 
-                    <div class="input-group form-section">
-                        <label for="">Respostas incorretas</label>
-                        <input type="text" placeholder="Resposta incorreta 1" class="incorrect-answer-text">
-                        <input type="url" placeholder="URL da imagem 1" class="incorrect-answer-url">
+                    
+
+                    <div class="form-section">
+
+                        <div class="input-group">
+                            <label for="">Respostas incorretas</label>
+                            <input type="text" placeholder="Resposta incorreta 1" class="incorrect-answer-text">
+                            <span></span>
+                        </div>
+
+                        <div class="input-group">
+                            <input type="url" placeholder="URL da imagem 1" class="incorrect-answer-url">
+                            <span></span>
+                        </div>
+
                     </div>
 
-                    <div class="input-group form-section">
-                        <input type="text" placeholder="Resposta incorreta 2" class="incorrect-answer-text">
-                        <input type="url" placeholder="URL da imagem 2" class="incorrect-answer-url">
+                    <div class="form-section">
+
+                        <div class="input-group">
+                            <input type="text" placeholder="Resposta incorreta 2" class="incorrect-answer-text">
+                            <span></span>
+                        </div>
+
+                        <div class="input-group">
+                            <input type="url" placeholder="URL da imagem 2" class="incorrect-answer-url">
+                            <span></span>
+                        </div>
+
                     </div>
 
-                    <div class="input-group form-section">
-                        <input type="text" placeholder="Resposta incorreta 3" class="incorrect-answer-text">
-                        <input type="url" placeholder="URL da imagem 3" class="incorrect-answer-url">
+                    <div class="form-section">
+
+                        <div class="input-group">
+                            <input type="text" placeholder="Resposta incorreta 3" class="incorrect-answer-text">
+                            <span></span>
+                        </div>
+
+                        <div class="input-group">
+                            <input type="url" placeholder="URL da imagem 3" class="incorrect-answer-url">
+                            <span></span>
+                        </div>
+
                     </div>
 
                 </div>
@@ -386,9 +516,19 @@ function appendLevelsToForm(){
                     <div class="input-group">
                         <label for="">Nível ${i + 1}</label>
                         <input type="text" placeholder="Título do nível" class="level-title">
+                        <span></span>
+                    </div>
+                    <div class="input-group">
                         <input type="number" placeholder="% de acerto mínima" class="level-percentage">
+                        <span></span>
+                    </div>
+                    <div class="input-group">
                         <input type="url" placeholder="URL da imagem do nível" class="level-url">
+                        <span></span>
+                    </div>
+                    <div class="input-group">
                         <input type="text" placeholder="Descrição do nível" class="level-description">
+                        <span></span>
                     </div>
                 </div>
 

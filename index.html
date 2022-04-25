@@ -19,7 +19,7 @@
     </header>
     
     <!-- Página de listagem dos quizzes -->
-    <div class="quizz-lists-screen m-t-140">
+    <div class="quizz-lists-screen m-t-140 hidden">
         <!-- <div class="criar-quizz">
             <span>Você não criou nenhum quizz ainda :(</span>
             <button onclick="changeScreen('creation')">Criar Quizz</button>
@@ -44,7 +44,7 @@
     </div>
 
     <!-- Página de criação de um quizz -->
-    <div class="quizz-creation-screen m-t-140 hidden">
+    <div class="quizz-creation-screen m-t-140">
 
         <form class="d-flex">
 
@@ -56,18 +56,22 @@
                 <div class="form-group">
                     <div class="input-group">
                         <input type="text" placeholder="Título do seu quizz" name="title">
+                        <span></span>
                     </div>
                     
                     <div class="input-group">
                         <input type="url" name="imgURL" placeholder="URL da imagem do seu quizz">
+                        <span></span>
                     </div>
     
                     <div class="input-group">
                         <input type="number" placeholder="Quantidade de perguntas do quizz" name="questionsQty">
+                        <span></span>
                     </div>
     
                     <div class="input-group">
                         <input type="number" placeholder="Quantidade de níveis do quizz" name="levelsQty">
+                        <span></span>
                     </div>
                 </div>
             </div>
