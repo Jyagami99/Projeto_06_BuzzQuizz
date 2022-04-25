@@ -53,7 +53,6 @@ function resetQuizzCreation(){
     finalScreen.classList.add('hidden');
     forwardBtn.innerText = 'Prosseguir para criar perguntas';
     backHomeBtn.classList.add('hidden');
-
     creationActualStep = 0;
 
 }
