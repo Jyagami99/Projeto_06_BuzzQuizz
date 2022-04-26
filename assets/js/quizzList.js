@@ -2,6 +2,7 @@ let bodyElement;
 let listaElement;
 
 function recebeQuizz(){
+    showLoading();
     let promise = axios.get('https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes');
     promise.then(todosQuizzes);
 }
@@ -112,6 +113,9 @@ function todosQuizzes(resposta) {
   
         listaElement.appendChild(tagDiv);
     }
+
+    hideLoading();
+
 }
 
 recebeQuizz();

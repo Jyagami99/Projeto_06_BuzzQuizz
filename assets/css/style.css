@@ -72,6 +72,8 @@ body {
 .meus-quizzes{
     display: flex;
     justify-content: flex-start;
+    flex-wrap: wrap;
+    width: 100%;
 }
 
 .lista-quizz{
@@ -289,6 +291,95 @@ form .form-group .form-group-header ion-icon {
 .loading-screen h6 {
     font-size: 26px;
     margin-top: 16px;
+}
+
+.quizz-screen .quizz-banner {
+    position: relative;
+}
+
+.quizz-screen .quizz-banner img {
+    margin-top: 69px;
+    width: 100%;
+    height: 227px;
+    object-fit: cover;
+}
+
+.quizz-screen .quizz-banner .gradient {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(to bottom, #000000c4 30%, #000000c4 100%);
+    align-items: center;
+    justify-content: center;
+}
+
+.quizz-screen .quizz-banner .gradient h1 {
+    color: white;
+    font-size: 39px;
+    margin-top: 69px;
+}
+
+.quizz-question {
+    width: 759px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 36px;
+    box-sizing: border-box;
+    flex-direction: column;
+    margin-bottom: 42px;
+}
+
+.quizz-question .header {
+    width: 100%;
+    height: 138px;
+    background-color: #000;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.quizz-question .header h2 {
+    font-size: 23px;
+    color: #fff;
+    font-weight: bold;
+}
+
+.quizz-question .options {
+    flex-wrap: wrap;
+    justify-content:space-between;
+}
+
+.quizz-question .options .option {
+    margin-bottom: 25px;
+    cursor: pointer;
+    width: 330px;
+}
+
+.quizz-question .options .option p {
+    font-weight: bold;
+    font-size: 20px;
+    margin-top: 10px;
+}
+
+.quizz-question .options .option img {
+    height: 175px;
+    width: 330px;
+}
+
+.quizz-question .options .option.not-selected-option {
+    opacity: 0.3;
+}
+
+.quizz-question .options .option.correct-option {
+    color: #009c22;
+    opacity: 1;
+}
+
+.quizz-question .options .option.incorrect-option {
+    color: #ff4b4b;
+    opacity: 1;
 }
 
 /* Essas são classes utilitárias, que podemos reaproveitar em outras partes do código */

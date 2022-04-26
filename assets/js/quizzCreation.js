@@ -319,8 +319,9 @@ function validateStep(){
 
     } else if(creationActualStep === 3){
 
-        // aqui devemos carregar a página do quiz
-        // necessário ter uma função para exibir um quiz
+        console.log('savedQuizzData', savedQuizzData);
+        changeScreen('quizz');
+        quizzClicado(savedQuizzData.id);
 
     }
 
