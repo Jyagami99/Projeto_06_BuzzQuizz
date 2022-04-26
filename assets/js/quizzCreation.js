@@ -601,6 +601,7 @@ function parseQuizzData(){
 
 function finishQuizzCreation(){
 
+    showLoading();
     const quizzData = parseQuizzData();
 
     axios.post('https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes', quizzData).then(response=>{
@@ -615,6 +616,7 @@ function finishQuizzCreation(){
         forwardBtn.innerText = 'Acessar Quizz';
         backHomeBtn.classList.remove('hidden');
         saveUserQuizz(response.data);
+        hideLoading();
 
     }).catch(err=>{
         console.log('err', err, err.response);
