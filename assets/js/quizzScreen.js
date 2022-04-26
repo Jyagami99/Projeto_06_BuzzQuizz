@@ -6,7 +6,7 @@ const body = {
     // levels:
 }
 
-function recebeQuizz(){
-    let promise = axios.get(`https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes/${id}`);
-    promise.then(exibeQuizz);
+function exibirQuizz(element){
+    let promise = axios.get(`https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes/${element}`);
+    promise.then(todosQuizzes);
 }

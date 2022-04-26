@@ -48,7 +48,7 @@ body {
     align-items: flex-start;
     flex-direction: column;
     width: 80%;
-    height: 200px;
+    min-height: 100px;
 }
 
 .meu-quizz span{
@@ -69,10 +69,15 @@ body {
     color: #EC362D;
 }
 
+.meus-quizzes{
+    display: flex;
+    justify-content: flex-start;
+}
+
 .lista-quizz{
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: flex-start;
     flex-wrap: wrap;
     width: 80%;
     height: auto;
@@ -90,7 +95,7 @@ body {
     width: 340px;
     height: 180px;
     border-radius: 10px;
-    margin: 20px 0px ;
+    margin: 20px 16px 20px 0px;
 }
 
 .img-topo{
