@@ -92,7 +92,7 @@ function todosQuizzes(resposta) {
   
     for (let i of quizz) {
 
-        if(ehMeuQuizz(quizzesArmazenados, i.id) === true){
+        if(quizzesArmazenados !== null && ehMeuQuizz(quizzesArmazenados, i.id) === true){
             continue;
         }
 
