@@ -14,7 +14,6 @@ function quizzClicado(id){
 function montaQuizz(response){
     
     const quizzData = response.data;
-    console.log('quizzData', quizzData);
 
     const quizzBanner = quizzScreen.querySelector('.quizz-banner');
     const quizzBannerImg = quizzBanner.querySelector('img');
@@ -44,7 +43,7 @@ function addQuestionsToQuizzScreen(questions){
                     <h2>${questions[i].title}</h2>
                 </div>
                 <div class="options d-flex">
-                    ${getQuestionOptionsHTML(shuffle(questions[i].answers), questions[i])}
+                    ${getQuestionOptionsHTML(shuffle(questions[i].answers), questions[i], i)}
                 </div>
             </div>
         `;
@@ -55,14 +54,14 @@ function addQuestionsToQuizzScreen(questions){
 
 }
 
-function getQuestionOptionsHTML(options, question){
+function getQuestionOptionsHTML(options, question, questionNumber){
 
     let html = '';
     
     for(let i = 0; i < options.length; i++){
 
         html += `
-            <div class="option" onclick="answerQuestion(this)" data-option='${JSON.stringify(options[i])}' data-question='${JSON.stringify(question)}'>
+            <div class="option" onclick="answerQuestion(this)" data-option='${JSON.stringify(options[i])}' data-question='${JSON.stringify(question)}' data-question-number='${questionNumber}'>
                 <img src="${options[i].image}" alt="">
                 <p>${options[i].text}</p>
             </div>
@@ -74,9 +73,11 @@ function getQuestionOptionsHTML(options, question){
 
 }
 
-function questionAlreadyAnswered(questionTitle){
+function questionAlreadyAnswered(questionTitle, questionNumber){
 
-    const questionAnswerIndex = questionsAnswered.indexOf(questionTitle);
+    const questionAnswerIndex = questionsAnswered.findIndex((question)=>{
+        return (question.title === questionTitle && question.questionNumber === questionNumber);
+    });
     return (questionAnswerIndex > -1);
 
 }
@@ -85,8 +86,9 @@ function answerQuestion(optionElement){
 
     const optionData = JSON.parse(optionElement.dataset.option);
     const questionData = JSON.parse(optionElement.dataset.question);
+    const questionNumber = parseInt(optionElement.dataset.questionNumber);
 
-    if(questionAlreadyAnswered(questionData.title) === false){
+    if(questionAlreadyAnswered(questionData.title, questionNumber) === false){
 
         fadeOtherOptions(optionElement);
 
@@ -104,8 +106,10 @@ function answerQuestion(optionElement){
         }
         
         optionElement.classList.add(optionClass);
-        questionsAnswered.push(questionData.title);
-        console.log('questionsAnswered', questionsAnswered, correctAnswersQty);
+        questionsAnswered.push({
+            title: questionData.title,
+            questionNumber
+        });
 
         const nextQuestionElement = optionElement.parentNode.parentNode.nextElementSibling;
         
