@@ -67,6 +67,7 @@ body {
     width: 30px;
     height: 30px;
     color: #EC362D;
+    cursor: pointer;
 }
 
 .meus-quizzes{

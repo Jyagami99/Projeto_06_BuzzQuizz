@@ -67,12 +67,16 @@ function meuQuizz(){
 
 }
 
+function ehMeuQuizz(meusQuizzes, quizzID){
+    return (meusQuizzes.findIndex(quizz => quizz.id === quizzID) > -1);
+}
+
 function todosQuizzes(resposta) {
     bodyElement = document.querySelector(".quizz-lists-screen");
-    let idArmazenado = JSON.parse(localStorage.getItem("quizzes"));
+    let quizzesArmazenados = JSON.parse(localStorage.getItem("quizzes"));
     let quizz = resposta.data;
   
-    if (idArmazenado == null || idArmazenado.length == 0){
+    if (quizzesArmazenados == null || quizzesArmazenados.length == 0){
         criarQuizz();
     }else{
         meuQuizz();
@@ -87,6 +91,11 @@ function todosQuizzes(resposta) {
     //      </div>`});
   
     for (let i of quizz) {
+
+        if(ehMeuQuizz(quizzesArmazenados, i.id) === true){
+            continue;
+        }
+
         let tagDiv = document.createElement("div");
         tagDiv.classList.add("card-quizz");
         tagDiv.classList.add("quizz-div");
