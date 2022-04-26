@@ -39,7 +39,7 @@ function meuQuizz(){
         let tagDiv = document.createElement("div");
         tagDiv.classList.add("card-quizz");
         tagDiv.classList.add("quizz-div");
-        tagDiv.addEventListener("click", () => changeScreen("quizz"));
+        tagDiv.addEventListener("click", () => quizzClicado(i.id));
 
         let tagH3 = document.createElement("h3");
         tagH3.textContent = i.title;
@@ -55,10 +55,10 @@ function meuQuizz(){
   
         tagDiv.appendChild(tagH3);
 
-        let element = document.createElement("span");
-        element.hidden = true;
-        element.textContent = i.id;
-        tagDiv.appendChild(element);
+        let tagSpan = document.createElement("span");
+        tagSpan.hidden = true;
+        tagSpan.textContent = i.id;
+        tagDiv.appendChild(tagSpan);
   
         lista.appendChild(tagDiv);
     }
@@ -88,12 +88,12 @@ function todosQuizzes(resposta) {
         let tagDiv = document.createElement("div");
         tagDiv.classList.add("card-quizz");
         tagDiv.classList.add("quizz-div");
-        tagDiv.addEventListener("click", () => changeScreen("quizz"));
+        tagDiv.addEventListener("click", () => quizzClicado(i.id));
 
-        let element = document.createElement("span");
-        element.hidden = true;
-        element.textContent = i.id;
-        tagDiv.appendChild(element);
+        let tagSpan = document.createElement("span");
+        tagSpan.hidden = true;
+        tagSpan.textContent = i.id;
+        tagDiv.appendChild(tagSpan);
         
 
         let tagH3 = document.createElement("h3");

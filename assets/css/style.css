@@ -51,7 +51,7 @@ body {
     min-height: 100px;
 }
 
-.meu-quizz span{
+.meu-quizz span:first-child{
     display: flex;
     align-items: center;
     font-weight: 700;
@@ -103,6 +103,11 @@ body {
     height: 230px;
     display: flex;
     justify-content: center;
+}
+
+.img-topo img {
+    width: 100%;
+    object-fit: cover;
 }
 
 .div-pergunta-titulo{
