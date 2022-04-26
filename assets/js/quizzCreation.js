@@ -7,8 +7,8 @@ const validationErrorObj = {
     inputGroup: null
 };
 const formCreationData = {};
-const forwardBtn = document.querySelector('.forward-btn');
-const backHomeBtn = document.querySelector('.back-home-btn');
+const forwardBtn = quizzCreationScreen.querySelector('.forward-btn');
+const backHomeBtn = quizzCreationScreen.querySelector('.back-home-btn');
 const quizzCreationTitle = quizzCreationScreen.querySelector('.form-title h3');
 const quizzCreationForm = quizzCreationScreen.querySelector('form');
 const quizzCreationStep1 = quizzCreationScreen.querySelector('.step1');
@@ -319,7 +319,6 @@ function validateStep(){
 
     } else if(creationActualStep === 3){
 
-        console.log('savedQuizzData', savedQuizzData);
         changeScreen('quizz');
         quizzClicado(savedQuizzData.id);
 
@@ -389,11 +388,7 @@ function displayActualScreen(){
 function controlButtons(){
 
     forwardBtn.addEventListener('click', () => nextStep());
-    backHomeBtn.addEventListener('click', () => {
-        recebeQuizz();
-        changeScreen('lists');
-    });
-    // ao voltar para a home, devemos recarregar a lista de quizzes, então devemos ter uma função para isso também
+    backHomeBtn.addEventListener('click', () => recebeQuizz());
 
 }
 

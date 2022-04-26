@@ -212,14 +212,15 @@ form .form-group .input-group {
     flex-direction: column;
 }
 
-form .form-actions {
+form .form-actions, .quizz-actions {
     margin-top: 50px;
     margin-bottom: 50px;
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 
-form .form-actions .forward-btn {
+.forward-btn {
     width: 370px;
     height: 54px;
     border-radius: 15px;
@@ -228,7 +229,7 @@ form .form-actions .forward-btn {
     border: none;
 }
 
-form .form-actions .back-home-btn {
+.back-home-btn {
     border: none;
     background: none;
     color: #818181;
@@ -338,6 +339,8 @@ form .form-group .form-group-header ion-icon {
     align-items: center;
     justify-content: center;
     margin-bottom: 20px;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 .quizz-question .header h2 {
@@ -361,6 +364,7 @@ form .form-group .form-group-header ion-icon {
     font-weight: bold;
     font-size: 20px;
     margin-top: 10px;
+    word-break: break-all;
 }
 
 .quizz-question .options .option img {
@@ -380,6 +384,26 @@ form .form-group .form-group-header ion-icon {
 .quizz-question .options .option.incorrect-option {
     color: #ff4b4b;
     opacity: 1;
+}
+
+.quizz-question .final-level-header {
+    height: 99px;
+    background-color: #ec362d;
+}
+
+.quizz-question .final-level-options .option {
+    cursor: initial;
+}
+
+.quizz-question .final-level-options .option img {
+    height: 275px;
+}
+
+.quizz-question .final-level-options .option p {
+    font-weight: bold;
+    font-size: 19px;
+    color: #484848;
+    word-break: break-all;
 }
 
 /* Essas são classes utilitárias, que podemos reaproveitar em outras partes do código */
